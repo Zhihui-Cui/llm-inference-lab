@@ -1,0 +1,29 @@
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+# Secrets
+.env
+.env.*
+!.env.example
+# Local data / model artifacts (keep small, sanitized evidence in reports/)
+data/
+datasets/
+checkpoints/
+models/
+runs/
+wandb/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+# Build/editor artifacts
+build/
+dist/
+*.egg-info/
+.vscode/
+.DS_Store
