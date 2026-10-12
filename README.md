@@ -8,6 +8,8 @@
 
 ## 本周从这里开始
 
+按顺序：[W6 张量与小回归 #1](https://github.com/Zhihui-Cui/llm-inference-lab/issues/1) → [W7 MLP #2](https://github.com/Zhihui-Cui/llm-inference-lab/issues/2) → [W8 故障定位与 G1 #3](https://github.com/Zhihui-Cui/llm-inference-lab/issues/3)。
+
 进入 learning/01_training，先读任务说明。自己创建 tensor_autograd.py，核对一个简单函数的手算梯度和 autograd；然后写 linear_regression.py，跑通小回归的参数更新。
 允许查 API，先尝试，再向 AI 请求提示与审查，不直接复制完整训练循环。
 
