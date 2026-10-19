@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-19",
+  "executor": "Codex verification of learner source snapshot, not independent learner assessment",
+  "python": "3.12.3",
+  "torch": "2.14.1+cpu",
+  "syntax_files": 19,
+  "checks": [
+    {
+      "script": "learning/01_training/mse_practice.py",
+      "sha256": "e0022c0255943e4067d47daf772093a0014cf6321e3fb47b3b6e91d6effb0ce2",
+      "exit_code": 0
+    },
+    {
+      "script": "learning/01_training/tensor_autograd.py",
+      "sha256": "c1c95242e54bf9f358ebbdd294f977e33ef04919f1b9cb35329e383a5529cd20",
+      "exit_code": 0
+    },
+    {
+      "script": "learning/01_training/linear_regression_nn.py",
+      "sha256": "12449bf58bda2cb393acf1cd5edd7c0661fbd27d6bd0f2333f1e5031258a7864",
+      "exit_code": 0
+    },
+    {
+      "script": "learning/01_training/predict_linear.py",
+      "sha256": "68c73843d50b9731fc24a800d2f006a998f17b1d334020119670e4c5fc08081f",
+      "exit_code": 0
+    },
+    {
+      "script": "learning/01_training/linear_independent_check.py",
+      "sha256": "9cdf602f45efcab60a00d5a3ad56be3ada0faf98089f2798a27fe957fad78368",
+      "exit_code": 0
+    },
+    {
+      "script": "learning/01_training/mlp_square.py",
+      "sha256": "6ca379ef7eb9d554a54950b84af31b717b76c3244bab357d5bdd61550366cb87",
+      "exit_code": 0
+    }
+  ]
+}
