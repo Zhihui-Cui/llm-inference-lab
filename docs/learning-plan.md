@@ -13,8 +13,8 @@
 ```text
 llm-inference-lab/
   learning/
-    01_training/       # W6–W8，自己写回归和 MLP
-    02_transformer/    # W9–W13，attention/decoder/KV
+    01_training/       # W06–W08，自己写回归和 MLP
+    02_transformer/    # W09–W13，attention/decoder/KV
     03_gpu/            # W14–W15，一个 CUDA 小练习 + 一个 Triton 算子
   inference/           # W16 起，一套成熟引擎的接入
   benchmarks/          # 配置驱动负载、采集与报告
@@ -30,10 +30,10 @@ llm-inference-lab/
 
 | 周 | 任务 | 验收证据 |
 |---|---|---|
-| W6 10/11–10/17 | Python自测、张量/autograd、小回归 | shape与手算梯度对照、参数更新、真实loss记录 |
-| W7 10/18–10/24 | DataLoader、MLP、训练验证、保存加载 | 数据独立划分、小样本过拟合、重载输出容差内一致 |
-| W8 10/25–10/31 | 可靠性与数学补漏 | 两个实际训练故障的定位；独立复做，G1 |
-| W9 11/1–11/7 | attention与causal mask | 与参考对照，未来token不影响当前位置 |
+| W06 10/11–10/17 | Python自测、张量/autograd、小回归 | shape与手算梯度对照、参数更新、真实loss记录 |
+| W07 10/18–10/24 | DataLoader、MLP、训练验证、保存加载 | 数据独立划分、小样本过拟合、重载输出容差内一致 |
+| W08 10/25–10/31 | 可靠性与数学补漏 | 两个实际训练故障的定位；独立复做，G1 |
+| W09 11/1–11/7 | attention与causal mask | 与参考对照，未来token不影响当前位置 |
 | W10 11/8–11/14 | decoder、位置编码、训练与生成 | 输入标签错位正确，padding不计有效目标 |
 | W11 11/15–11/21 | KV Cache、prefill/decode | 同参数/前缀/eval下缓存与重算下一token logits对齐 |
 | W12 11/22–11/28 | 边界与内存、profiling | 长度/位置/缓存增长边界，权重/KV/临时内存估算 |
@@ -52,20 +52,23 @@ W23–W26 保留缓冲、面试和申请，不再开新框架。日期是目标�
 
 ## 当前只启用三项学习任务
 
-### W6：张量、autograd 与第一次训练
+### W06：张量、autograd 与第一次训练
+
 - [ ] Python缺口只做定点补习；记录CPU环境和依赖。
 - [ ] 先手算简单标量导数，再用autograd核对，解释矩阵shape和广播。
 - [ ] 自己写小回归前向、loss、清梯度、backward、参数更新。
 - [ ] 固定种子，保存真实loss，解释一次参数变化与一个错误。
 建议路径：learning/01_training/tensor_autograd.py、linear_regression.py；由本人新建实现。
 
-### W7：独立 MLP 训练、验证和保存加载
+### W07：独立 MLP 训练、验证和保存加载
+
 - [ ] 数据划分无泄漏，预处理仅拟合训练数据，测试集不用于调参。
 - [ ] 自己写DataLoader、Module和循环，正确使用train/eval及验证禁用梯度。
 - [ ] 小样本过拟合仅用于检查实现，不宣称泛化。
 - [x] 保存参数及必要推理配置，固定输入重载一致：标准化均值/标准差、分类阈值；不代表已保存全部训练复现状态。
 
-### W8：故障定位与 G1 验收
+### W08：故障定位与 G1 验收
+
 - [x] 两个指导下故障闭环已记录：人工遗漏 step 与形状广播；独立迁移另行验收。
 - [ ] 不看完整答案独立复做训练/验证/保存加载，允许查API。
 - [ ] 解释shape、梯度、数据划分、指标和过拟合，记录提示程度。

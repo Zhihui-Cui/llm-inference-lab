@@ -2,17 +2,20 @@
 
 持续学习项目：独立训练 → Transformer/KV Cache → GPU 小实验 → 单卡推理评测 → 一个服务诊断专题。
 
-更新：2026-10-21，当前 W7（10/18–10/24）。CPU 上已跑通 Python MSE、Tensor/autograd、线性回归、MLP、分批训练、验证/测试和参数保存加载。当前属于**本人练习 + AI 提示、审查及参考代码辅助完成**；G1 独立训练门槛仍待验收，尚未开始 Transformer 或推理服务评测。
+更新：2026-10-21，当前 W07（10/18–10/24）。CPU 上已跑通 Python MSE、Tensor/autograd、线性回归、MLP、分批训练、验证/测试和参数保存加载。当前属于**本人练习 + AI 提示、审查及参考代码辅助完成**；G1 独立训练门槛仍待验收，尚未开始 Transformer 或推理服务评测。
 
 [总控与本周任务](https://github.com/Zhihui-Cui/ai-infra-roadmap/blob/main/now.md) · [阶段计划](docs/learning-plan.md) · [练习索引](learning/01_training/README.md)
 
-## 本次学习记录
+## 最新学习记录
 
-- [W7：截至 10/21 的进展](reports/2026-10-21-W07-checkpoint.md)：两次故障闭环、训练集标准化、二分类阈值搜索及模型/阈值独立加载；含五个脚本的隔离核验日志。
+| 截至日期 | 学习周 | 类型 | 文档 |
+|---|---|---|---|
+| 2026-10-21 | W07 | 阶段记录 | [训练可靠性与二分类](reports/2026-10-21-W07-checkpoint.md) |
+| 2026-10-19 | W07 | 阶段记录 | [数据划分与完整训练流程](reports/2026-10-19-W07-checkpoint.md) |
+| 2026-10-19 | W07 | 归档核验 | [训练脚本隔离运行](reports/2026-10-19-W07-verification.md) |
+| 2026-10-17 | W06 | 周复盘 | [Python/PyTorch 与最小训练](reports/2026-10-17-W06-review.md) |
 
-- [W6：10/11–10/17 学习总结](reports/2026-10-17-W06.md)：从纯 Python 到最小训练，并提前接触部分 W7 内容。
-- [W7：截至 10/19 的进展](reports/2026-10-19-W07-checkpoint.md)：数据划分、早停、含噪声实验与完整线性流程复测。
-- [10/19 代码归档核验](reports/2026-10-19-verification.md)：独立于历史学习成绩的本次实际运行，附输出及源码摘要。
+[全部学习记录](reports/README.md) · [记录模板](reports/TEMPLATE.md) · [命名与记录规范](https://github.com/Zhihui-Cui/ai-infra-roadmap/blob/main/docs/documentation-conventions.md)
 
 ## 环境与运行
 
@@ -37,7 +40,7 @@ python learning/01_training/mlp_square.py
 2. 下一小节：类别不平衡；补 Precision/Recall 的统计与零分母处理，多分类尚未学习。
 3. 月底一次综合变体检查 G1，允许查 API；完善配置/划分追溯，不用重复抄写完整训练循环。G1 独立验收仍待完成。
 
-任务入口：[W6 #1](https://github.com/Zhihui-Cui/llm-inference-lab/issues/1) · [W7 #2](https://github.com/Zhihui-Cui/llm-inference-lab/issues/2) · [W8 / G1 #3](https://github.com/Zhihui-Cui/llm-inference-lab/issues/3)。
+任务入口：[W06 #1](https://github.com/Zhihui-Cui/llm-inference-lab/issues/1) · [W07 #2](https://github.com/Zhihui-Cui/llm-inference-lab/issues/2) · [W08 / G1 #3](https://github.com/Zhihui-Cui/llm-inference-lab/issues/3)。
 
 ## 仓库边界
 
