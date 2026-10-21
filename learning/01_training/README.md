@@ -1,6 +1,6 @@
 # 训练阶段练习索引
 
-截至 2026-10-19。保存学习过程中的各阶段版本，未统一重构为训练框架。允许查语法/API；在用户明确请求时提供过完整参考实现，因此“运行通过”和“独立验收”分开记录。
+截至 2026-10-21。保存学习过程中的各阶段版本，未统一重构为训练框架。允许查语法/API；在用户明确请求时提供过完整参考实现，因此“运行通过”和“独立验收”分开记录。
 
 ## 建议阅读顺序
 
@@ -22,6 +22,18 @@
 | 含噪声实验 | [linear_noisy.py](linear_noisy.py) | 噪声标准差 0.2，误差不应追求到零 |
 | 综合复测 | [linear_independent_check.py](linear_independent_check.py) | 120 样本、80/20/20、2,000 次更新、重载和数值断言 |
 
+## 10/21 新增与更新
+
+| 文件 | 内容 |
+|---|---|
+| [broadcast_debug.py](broadcast_debug.py) | 广播错误的修复前后对照 |
+| [standardization_practice.py](standardization_practice.py) | 训练集统计量、标准化、必要配置保存加载 |
+| [binary_classification.py](binary_classification.py) | BCE、阈值、误报/漏报、验证网格搜索、教学测试、模型与阈值保存 |
+| [predict_binary.py](predict_binary.py) | 先运行 binary_classification，再独立恢复参数与阈值 |
+| [linear_independent_check.py](linear_independent_check.py) | 恢复 step 后的调试版本；参数在 step 后打印，梯度来自更新前 |
+
+[本次详细报告和核验日志](../../reports/2026-10-21-W07-checkpoint.md)。标准化和二分类各自独立，二分类没有输入标准化。仅保存推理状态，不包括恢复优化器训练所需的状态。
+
 所有脚本从仓库根目录用 python 加对应路径运行。无后缀的 MLP 文件也是 Python 文本，可用 python learning/01_training/mlp_best_model 运行。保存文件位于脚本旁边；训练脚本可能覆盖自己的旧参数文件。
 
 ## 当前证据如何读
@@ -33,4 +45,4 @@
 - eval() 切换层的行为；no_grad() 控制计算图；backward() 求导；optimizer.step() 更新参数。当前 Linear/ReLU 的 train/eval 前向行为相同。
 - 训练 MSE 很小、单点误差通过、重载一致，各自只能证明对应检查；不能互相替代，也不能代替独立编写能力。
 
-部分脚本有随机种子，部分没有；不为历史实验补写不存在的种子。数据处理配置、划分持久化、两个完整故障闭环和延迟独立复做仍待补齐。
+部分脚本有随机种子，部分没有；不为历史实验补写不存在的种子。标准化统计量、分类阈值和两个指导下故障闭环已补齐；划分索引持久化、完整复现配置及延迟独立复做仍待完善。

@@ -1,0 +1,48 @@
+{
+  "record_date": "2026-10-21",
+  "kind": "assistant archival verification in isolated copy; distinct from learner runs",
+  "python": "3.12.3",
+  "torch": "2.14.1+cpu",
+  "device": "cpu",
+  "source_sha256": {
+    "broadcast_debug.py": "83a39d1cf370844897a25f60c2f6ec125ce89311727bdf565fad77cd0ff0ebd1",
+    "standardization_practice.py": "e94799677532b3f4a5ae92d57de0855627a0bebb6fccb5ab113c4d7cdf0c9811",
+    "binary_classification.py": "be87db1395baf71e63c13fbf11fd78a0f59641b705d0ba089a56a2152765aaab",
+    "predict_binary.py": "948ecc6cdaafc39e227269f13726a46fc6f4c4dc1e69fd2ba8da66e5bb7369b6",
+    "linear_independent_check.py": "bada685b0a2de98c2345af946102f35f509c81957625676f22864cc8738ff065"
+  },
+  "syntax_checked": [
+    "broadcast_debug.py",
+    "standardization_practice.py",
+    "binary_classification.py",
+    "predict_binary.py",
+    "linear_independent_check.py"
+  ],
+  "runs": [
+    {
+      "script": "broadcast_debug.py",
+      "exit_code": 0,
+      "command": "python learning/01_training/broadcast_debug.py"
+    },
+    {
+      "script": "standardization_practice.py",
+      "exit_code": 0,
+      "command": "python learning/01_training/standardization_practice.py"
+    },
+    {
+      "script": "binary_classification.py",
+      "exit_code": 0,
+      "command": "python learning/01_training/binary_classification.py"
+    },
+    {
+      "script": "predict_binary.py",
+      "exit_code": 0,
+      "command": "python learning/01_training/predict_binary.py"
+    },
+    {
+      "script": "linear_independent_check.py",
+      "exit_code": 0,
+      "command": "python learning/01_training/linear_independent_check.py"
+    }
+  ]
+}

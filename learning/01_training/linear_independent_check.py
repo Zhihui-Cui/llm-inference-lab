@@ -117,16 +117,24 @@ def main() -> None:
     for epoch in range(num_epochs):
         model.train()
 
-        for batch_inputs, batch_targets in train_loader:
+        for batch_index, (batch_inputs, batch_targets) in enumerate(train_loader):
             optimizer.zero_grad()
 
             predictions = model(batch_inputs)
             loss = mse(predictions, batch_targets)
 
             loss.backward()
+            
             optimizer.step()
 
             update_count += 1
+
+            # 每轮只观察第一批，避免输出太多。
+            if epoch < 2 and batch_index == 0:
+                print("权重：", model.weight.item())
+                print("偏置：", model.bias.item())
+                print("权重梯度：", model.weight.grad.item())
+                print("偏置梯度：", model.bias.grad.item())
 
         # 内层循环结束后，每 20 轮检查并打印一次。
         if (epoch + 1) % log_interval == 0:
