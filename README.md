@@ -2,7 +2,7 @@
 
 持续学习项目：独立训练 → Transformer/KV Cache → GPU 小实验 → 单卡推理评测 → 一个服务诊断专题。
 
-更新：2026-10-25，当前 W08（10/25–10/31）。CPU 上已跑通 Python MSE、Tensor/autograd、线性回归、MLP、分批训练、验证/测试和参数保存加载。当前属于**本人练习 + AI 提示、审查及参考代码辅助完成**；G1 独立训练门槛仍待验收，尚未开始 Transformer 或推理服务评测。
+更新：2026-10-26，当前 W08（10/25–10/31）。CPU 上已跑通 Python MSE、Tensor/autograd、线性回归、MLP、分批训练、验证/测试和参数保存加载。当前属于**本人练习 + AI 提示、审查及参考代码辅助完成**；G1 独立训练门槛仍待验收，尚未开始 Transformer 或推理服务评测。
 
 [总控与本周任务](https://github.com/Zhihui-Cui/ai-infra-roadmap/blob/main/now.md) · [阶段计划](docs/learning-plan.md) · [练习索引](learning/01_training/README.md)
 
@@ -10,6 +10,7 @@
 
 | 截至日期 | 学习周 | 类型 | 文档 |
 |---|---|---|---|
+| 2026-10-25 | W08 | 阶段记录 | [M01 实验追溯与重载检查（10/26 补记）](reports/2026-10-25-W08-checkpoint.md) |
 | 2026-10-24 | W07 | 周复盘 | [分类训练、评价指标与保存加载](reports/2026-10-24-W07-review.md) |
 | 2026-10-23 | W07 | 阶段记录 | [二分类指标与阈值选择](reports/2026-10-23-W07-checkpoint.md) |
 | 2026-10-21 | W07 | 阶段记录 | [训练可靠性与二分类](reports/2026-10-21-W07-checkpoint.md) |
@@ -40,7 +41,8 @@ python learning/01_training/mlp_square.py
 
 1. 两次指导下故障闭环、标准化和二分类入门已完成，不再作为未学任务重复安排。
 2. 类别不平衡、Precision/Recall 统计、无报警零分母案例、按代价选择阈值及独立恢复阈值已完成指导练习（见 10/23 阶段记录，依据学习者提供的运行输出）。10/24 已完成三分类及混淆矩阵指导练习；10/25 回顾已能正确说明指标分母，并本人确认保存加载打印结果一致。详细证据与验证边界见 W07 周复盘。
-3. 月底一次综合变体检查 G1，允许查 API；完善配置/划分追溯，不用重复抄写完整训练循环。G1 独立验收仍待完成。
+3. M01 已完成配置/种子/划分索引保存与读回一致、线性回归全精度重载及最终测试，依据本人 10/25 运行输出；助手提供完整修订参考。尚待从保存信息重建划分并检查隔离/覆盖，以及归档真实最终源码，M01 暂不整项勾选。详见 W08 阶段记录；远程训练脚本尚未包含此次本地修改。
+4. M01 收尾后进入 M02 综合独立变体（G1），允许查 API，按任务依赖推进。已有训练和重载检查不重做；G1 独立验收仍待完成。
 
 任务入口：[W06 #1](https://github.com/Zhihui-Cui/llm-inference-lab/issues/1) · [W07 #2](https://github.com/Zhihui-Cui/llm-inference-lab/issues/2) · [W08 / G1 #3](https://github.com/Zhihui-Cui/llm-inference-lab/issues/3)。
 
