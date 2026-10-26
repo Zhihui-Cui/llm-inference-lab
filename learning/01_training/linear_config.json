@@ -1,0 +1,17 @@
+{
+  "num_samples": 120,
+  "input_min": -3.0,
+  "input_max": 3.0,
+  "target_slope": 1.5,
+  "target_bias": -0.7,
+  "split_sizes": [
+    80,
+    20,
+    20
+  ],
+  "batch_size": 8,
+  "learning_rate": 0.03,
+  "num_epochs": 200,
+  "log_interval": 20,
+  "seed": 42
+}

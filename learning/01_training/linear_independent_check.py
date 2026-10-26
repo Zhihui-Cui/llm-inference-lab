@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import torch
@@ -19,7 +20,7 @@ def mse(
     return ((predictions - targets) ** 2).mean()
 
 
-def build_model() -> nn.Module:
+def build_model() -> nn.Linear:
     """每个样本一个输入特征，输出一个预测值。"""
     return nn.Linear(1, 1)
 
@@ -50,22 +51,42 @@ def evaluate(model: nn.Module, loader: DataLoader) -> float:
 
 
 def main() -> None:
-    # 1. 准备数据：120 个样本，每个样本一个特征。
-    # inputs 和 targets 的形状都是 [120, 1]。
-    inputs = torch.linspace(-3.0, 3.0, 120).reshape(-1, 1)
-    targets = 1.5 * inputs - 0.7
+    config = {
+        "num_samples": 120,
+        "input_min": -3.0,
+        "input_max": 3.0,
+        "target_slope": 1.5,
+        "target_bias": -0.7,
+        "split_sizes": [80, 20, 20],
+        "batch_size": 8,
+        "learning_rate": 0.03,
+        "num_epochs": 200,
+        "log_interval": 20,
+        "seed": 42,
+    }
+
+    # 1. 固定本次实验的随机起点；划分还会单独保存实际索引。
+    torch.manual_seed(config["seed"])
+
+    inputs = torch.linspace(
+        config["input_min"],
+        config["input_max"],
+        config["num_samples"],
+    ).reshape(-1, 1)
+    targets = config["target_slope"] * inputs + config["target_bias"]
 
     dataset = TensorDataset(inputs, targets)
 
     # 2. 训练开始前，只划分一次。
     train_dataset, validation_dataset, test_dataset = random_split(
         dataset,
-        [80, 20, 20],
+        config["split_sizes"],
+        generator=torch.Generator().manual_seed(config["seed"]),
     )
 
     # 3. 创建四个加载器。
     # train_loader 和 train_eval_loader 使用同一份训练数据。
-    batch_size = 8
+    batch_size = config["batch_size"]
 
     train_loader = DataLoader(
         train_dataset,
@@ -106,14 +127,16 @@ def main() -> None:
 
     optimizer = torch.optim.SGD(
         model.parameters(),
-        lr=0.03,
+        lr=config["learning_rate"],
     )
 
-    num_epochs = 200
-    log_interval = 20
+    num_epochs = config["num_epochs"]
+    log_interval = config["log_interval"]
+    if num_epochs <= 0 or log_interval <= 0:
+        raise ValueError("训练轮数和日志间隔必须为正整数")
     update_count = 0
 
-    # 5. 固定训练 200 轮。
+    # 5. 按配置训练固定轮数；保存最后一轮，不做最优模型选择。
     for epoch in range(num_epochs):
         model.train()
 
@@ -124,19 +147,19 @@ def main() -> None:
             loss = mse(predictions, batch_targets)
 
             loss.backward()
-            
+
             optimizer.step()
 
             update_count += 1
 
             # 每轮只观察第一批，避免输出太多。
             if epoch < 2 and batch_index == 0:
-                print("权重：", model.weight.item())
-                print("偏置：", model.bias.item())
+                print("更新后权重：", model.weight.item())
+                print("更新后偏置：", model.bias.item())
                 print("权重梯度：", model.weight.grad.item())
                 print("偏置梯度：", model.bias.grad.item())
 
-        # 内层循环结束后，每 20 轮检查并打印一次。
+        # 内层循环结束后，按配置的日志间隔检查并打印。
         if (epoch + 1) % log_interval == 0:
             train_loss = evaluate(model, train_eval_loader)
             validation_loss = evaluate(model, validation_loader)
@@ -148,13 +171,41 @@ def main() -> None:
                 f"验证 MSE = {validation_loss:.6e}"
             )
 
-    # 6. 所有训练结束后，保存最后一轮参数。
+    # 单独计算最终验证结果，避免日志间隔导致结果遗漏或停留在较早轮次。
+    validation_loss = evaluate(model, validation_loader)
+
+    # 6. 保存本次实验的最后一轮参数、配置和实际划分。
     model_path = Path(__file__).with_name(
         "linear_independent_weights.pth"
     )
     torch.save(model.state_dict(), model_path)
 
     print(f"\n参数保存位置：{model_path}")
+
+    split_indices = {
+        "train": train_dataset.indices,
+        "validation": validation_dataset.indices,
+        "test": test_dataset.indices,
+    }
+
+    split_path = model_path.with_name("linear_split_indices.pth")
+    torch.save(split_indices, split_path)
+
+    config_path = model_path.with_name("linear_config.json")
+    config_path.write_text(
+        json.dumps(config, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    loaded_indices = torch.load(split_path, weights_only=True)
+    for split_name, indices in split_indices.items():
+        assert loaded_indices[split_name] == indices, f"{split_name} 索引读回不一致"
+
+    loaded_config = json.loads(config_path.read_text(encoding="utf-8"))
+    assert loaded_config == config, "配置读回不一致"
+    print(f"配置保存位置：{config_path}")
+    print(f"划分保存位置：{split_path}")
+    print("通过：配置和三份划分索引保存、读取一致")
 
     # 7. 创建相同结构的新模型，加载参数。
     loaded_model = build_model()
@@ -189,6 +240,8 @@ def main() -> None:
     assert torch.allclose(
         original_predictions,
         loaded_predictions,
+        rtol=1e-5,
+        atol=1e-8,
     ), "保存前后的预测不一致"
 
     print("通过：保存前后的预测一致")
@@ -234,7 +287,8 @@ def main() -> None:
     print(f"最终测试 MSE：{test_mse:.6e}")
     print(f"测试集最大绝对误差：{max_absolute_error:.6e}")
 
-    assert update_count == 2000, "参数更新次数不符合预期"
+    expected_updates = num_epochs * len(train_loader)
+    assert update_count == expected_updates, "参数更新次数不符合预期"
     assert validation_loss < 1e-4, "验证 MSE 未达标"
     assert test_mse < 1e-4, "测试 MSE 未达标"
     assert max_absolute_error < 0.05, "测试集最大绝对误差未达标"
