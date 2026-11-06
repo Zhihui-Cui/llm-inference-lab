@@ -1,6 +1,6 @@
 # llm-inference-lab：一个持续主项目
 
-当前状态（2026-11-03）：M01–M07 按指导下完成与针对性补练记录；M08 练习进行中、尚未验收，M09/M10 未完成。见 [最新阶段记录](../reports/2026-11-03-W09-checkpoint.md)及 [当前任务清单](https://github.com/Zhihui-Cui/llm-inference-lab/issues/4)。本次停止讲解、仅归档，后续先补整体理解和代码衔接。下方 10/25 状态、周排期及旧独立验收清单保留为历史规划；当前按任务依赖推进，不按固定日期追赶，也不以历史未勾选项否定当前指导下完成记录。
+当前状态（2026-11-06）：M03–M10 按指导下完成及代码验收通过收尾；已有源码、运行证据和帮助程度记录，见 [最新阶段记录](../reports/2026-11-06-W09-checkpoint.md)。下一项为 [M11](https://github.com/Zhihui-Cui/llm-inference-lab/issues/5)，尚未完成 decoder 或语言模型训练。下方 10/25 状态、周排期及旧独立验收清单保留为历史规划；当前按任务依赖推进，不按固定日期追赶，不把指导下完成等同于独立验收。
 
 2026-10-25：标准化、二分类指标与阈值、三分类及混淆矩阵已完成指导练习；本人确认三分类保存前后打印结果一致，全精度容差验证仍分别记录。G1 尚待综合独立变体验收，下一步完善实验配置和划分追溯，不重复抄写已有训练流程。[W07 周复盘](../reports/2026-10-24-W07-review.md)。以下包含独立要求的复选项继续按完整标准验收。
 
@@ -16,7 +16,7 @@
 llm-inference-lab/
   learning/
     01_training/       # W06–W08，自己写回归和 MLP
-    02_transformer/    # W09–W13，attention/decoder/KV
+    02_text/           # 已有 M03–M10 文本/Attention 练习；后续 decoder/KV 按需建立
     03_gpu/            # W14–W15，一个 CUDA 小练习 + 一个 Triton 算子
   inference/           # W16 起，一套成熟引擎的接入
   benchmarks/          # 配置驱动负载、采集与报告

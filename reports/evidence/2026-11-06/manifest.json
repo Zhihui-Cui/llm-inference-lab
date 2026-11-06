@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-06",
+  "executor": "assistant",
+  "status": "passed",
+  "remote_parent_commit": "c42239723baf8b91bafc4395cf893431a513136d",
+  "local_source_checkout_head": "60d1e9655e26b27da06279112ad12a32d9f9a77a",
+  "note": "Source files were read from the learner working tree, including untracked files. The remote commit is based on current remote main, preserving unrelated work.",
+  "source_sha256": {
+    "learning/02_text/trainable_attention.py": "0102d194d351e03db70f45826ee03c39b2d190a306f467cb96745120f8eedf78",
+    "learning/02_text/attention_practice.py": "e8ad29b8361ea32d1b834a04c8bea5cf87caf7498ee52ddb8e029e6d1422f864",
+    "learning/02_text/sequence_windows.py": "160ce288fa2d5421f897cdbec00ca81d5f2c84548678e40fe942ac0442035d4b",
+    "learning/02_text/char_vocab.py": "9eb31cb8901ec6919fab1569034eac93a5ded386336589a892e0fd88be65817d",
+    "learning/02_text/token_position_embedding.py": "19b791b7fe392a531c3b239e7a3dc988d88ca079155a2b959e0c23f6925bc520",
+    "learning/02_text/attention_from_text.py": "d982265f2d0e21868198812d58c96ab5d3a1cf9222ff7a4b3acad8799cfa5c7e",
+    "learning/02_text/multihead_attention.py": "968b834f005b12c20b28f292f71b8e72cb5c6f89c2b2a60ed3f8e3b686ba9f44"
+  },
+  "verification_script_sha256": {
+    "tests/verify_m03_m07.py": "bac155788169b7b3b5ee273957e24f0317b611492648339a26472240372b91cc",
+    "tests/verify_m08_m10.py": "e2789c25e35ccdf5e9c76c24e1f6787fbbc69a5a7643af5f4f8fedd3c8e8f706"
+  },
+  "actual_commands": [
+    "/home/zhihui/projects/llm-inference-lab/.venv/bin/python -B /mnt/c/Users/28505/Documents/Codex/2026-11-04/https-github-com-zhihui-cui-llm/work/m03_m10_audit/audit_basics.py --repo /home/zhihui/projects/llm-inference-lab --output /mnt/c/Users/28505/Documents/Codex/2026-11-04/https-github-com-zhihui-cui-llm/work/m03_m10_audit/evidence_basics.json",
+    "/home/zhihui/projects/llm-inference-lab/.venv/bin/python -B /mnt/c/Users/28505/Documents/Codex/2026-11-04/https-github-com-zhihui-cui-llm/work/m03_m10_audit/audit_heads_positions.py --repo /home/zhihui/projects/llm-inference-lab --output /mnt/c/Users/28505/Documents/Codex/2026-11-04/https-github-com-zhihui-cui-llm/work/m03_m10_audit/evidence_heads_positions.json",
+    "/home/zhihui/projects/llm-inference-lab/.venv/bin/python -B /home/zhihui/projects/llm-inference-lab/learning/02_text/attention_from_text.py"
+  ],
+  "archived_runners": {
+    "audit_basics.py": "tests/verify_m03_m07.py",
+    "audit_heads_positions.py": "tests/verify_m08_m10.py"
+  },
+  "evidence_files": [
+    "m03-m07.json",
+    "m08-m10.json"
+  ],
+  "demo_entrypoints_passed": 7,
+  "additional_entrypoint": {
+    "path": "learning/02_text/attention_from_text.py",
+    "exit_code": 0,
+    "stdout": "文字： 我爱学\n编号： tensor([7, 8, 5])\n\nEmbedding 查出的向量：\ntensor([[-0.2516,  0.8599],\n        [-0.3097, -0.3957],\n        [-0.4934,  0.2415]], grad_fn=<EmbeddingBackward0>)\n\n查询层算出的 Q：\ntensor([[0.0864, 0.4186],\n        [0.3619, 0.6484],\n        [0.2056, 0.4913]], grad_fn=<AddmmBackward0>)\n\n键层算出的 K：\ntensor([[-0.0095, -0.4249],\n        [ 0.3548, -0.6075],\n        [ 0.0828, -0.6018]], grad_fn=<AddmmBackward0>)\n\n值层算出的 V：\ntensor([[0.1449, 0.9282],\n        [0.5286, 0.2313],\n        [0.4830, 0.7006]], grad_fn=<AddmmBackward0>)\n\nAttention 权重：\ntensor([[0.3421, 0.3314, 0.3265],\n        [0.3386, 0.3418, 0.3196],\n        [0.3398, 0.3363, 0.3239]], grad_fn=<SoftmaxBackward0>)\n\nAttention 输出：\ntensor([[0.3824, 0.6229],\n        [0.3841, 0.6173],\n        [0.3834, 0.6201]], grad_fn=<MmBackward0>)\n",
+    "stderr": ""
+  },
+  "scope": "Guided learning and assistant code verification; not independent mastery or full LM training."
+}

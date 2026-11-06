@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "executor": "assistant",
+  "purpose": "Behavioral acceptance of guided M03-M07 exercises, not independent learner mastery",
+  "executed_at_utc": "2026-11-06T07:18:46.138837+00:00",
+  "environment": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu",
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "seed": 42,
+  "tolerance": {
+    "rtol": 1e-05,
+    "atol": 1e-06
+  },
+  "source_sha256": {
+    "learning/02_text/char_vocab.py": "9eb31cb8901ec6919fab1569034eac93a5ded386336589a892e0fd88be65817d",
+    "learning/02_text/sequence_windows.py": "160ce288fa2d5421f897cdbec00ca81d5f2c84548678e40fe942ac0442035d4b",
+    "learning/02_text/attention_practice.py": "e8ad29b8361ea32d1b834a04c8bea5cf87caf7498ee52ddb8e029e6d1422f864",
+    "learning/02_text/trainable_attention.py": "0102d194d351e03db70f45826ee03c39b2d190a306f467cb96745120f8eedf78"
+  },
+  "demo_scripts": [
+    {
+      "path": "learning/02_text/char_vocab.py",
+      "exit_code": 0,
+      "stdout": "通过：已知字符往返一致，未知字符处理符合预期\n",
+      "stderr": ""
+    },
+    {
+      "path": "learning/02_text/sequence_windows.py",
+      "exit_code": 0,
+      "stdout": "验证输入： tensor([[7, 8, 0]])\n验证目标： tensor([[8, 0, 1]])\n验证输入 shape： torch.Size([1, 3])\n",
+      "stderr": ""
+    },
+    {
+      "path": "learning/02_text/attention_practice.py",
+      "exit_code": 0,
+      "stdout": "第 1 个位置的权重： tensor([0.7337, 0.1784, 0.0879])\n第 1 个位置的输出： tensor([3.4674, 3.5351])\n第 2 个位置的权重： tensor([0.8482, 0.0501, 0.1017])\n第 2 个位置的输出： tensor([3.6964, 3.1504])\n第 3 个位置的权重： tensor([0.6728, 0.1636, 0.1636])\n第 3 个位置的输出： tensor([3.3457, 3.4907])\n转置后的 K：\ntensor([[2., 1., 1.],\n        [1., 2., 1.]])\n所有位置的匹配分数：\ntensor([[7., 5., 4.],\n        [5., 1., 2.],\n        [4., 2., 2.]])\n所有位置的权重：\ntensor([[0.7337, 0.1784, 0.0879],\n        [0.8482, 0.0501, 0.1017],\n        [0.6728, 0.1636, 0.1636]])\n每一行的权重总和：\ntensor([1.0000, 1.0000, 1.0000])\n所有位置的输出：\ntensor([[3.4674, 3.5351],\n        [3.6964, 3.1504],\n        [3.3457, 3.4907]])\n通过：矩阵计算与逐位置计算一致\n函数输出： tensor([[3.4674, 3.5351],\n        [3.6964, 3.1504],\n        [3.3457, 3.4907]])\n函数权重： tensor([[0.7337, 0.1784, 0.0879],\n        [0.8482, 0.0501, 0.1017],\n        [0.6728, 0.1636, 0.1636]])\n通过：封装后的函数与原计算一致\n因果 Attention 权重：\ntensor([[1.0000, 0.0000, 0.0000],\n        [0.9442, 0.0558, 0.0000],\n        [0.6728, 0.1636, 0.1636]])\n因果 Attention 输出：\ntensor([[4.0000, 3.0000],\n        [3.8884, 3.1674],\n        [3.3457, 3.4907]])\n加掩码：前两个位置的输出变化\ntensor([[0., 0.],\n        [0., 0.]])\n不加掩码：前两个位置的输出变化\ntensor([[8.5326, 9.4649],\n        [8.3036, 9.8495]])\n通过：掩码阻止了未来位置的信息影响前面的输出\n更新 0 次后的损失：0.1465\n“习”和“猫”的概率： tensor([[0.8637, 0.1363]])\n更新 20 次后的损失：0.0092\n“习”和“猫”的概率： tensor([[0.9908, 0.0092]])\n只有一个位置时的权重： tensor([[1.]])\n只有一个位置时的输出： tensor([[4., 3.]])\n通过：只有一个位置时，权重为 1，输出等于自己的 V\n",
+      "stderr": ""
+    },
+    {
+      "path": "learning/02_text/trainable_attention.py",
+      "exit_code": 0,
+      "stdout": "查询层的权重：\ntensor([[ 0.5406,  0.5869],\n        [-0.1657,  0.6496]])\n键层的权重：\ntensor([[-0.1549,  0.1427],\n        [-0.3443,  0.4153]])\n值层的权重：\ntensor([[ 0.6233, -0.5188],\n        [ 0.6146,  0.1323]])\n输入向量：\ntensor([[2., 1.],\n        [1., 2.],\n        [1., 1.]])\n计算出的 Q：\ntensor([[1.6681, 0.3182],\n        [1.7144, 1.1335],\n        [1.1275, 0.4839]])\n计算出的 K：\ntensor([[-0.1672, -0.2732],\n        [ 0.1304,  0.4863],\n        [-0.0122,  0.0710]])\n计算出的 V：\ntensor([[ 0.7279,  1.3616],\n        [-0.4142,  0.8793],\n        [ 0.1046,  0.7470]])\nAttention 权重：\ntensor([[1.0000, 0.0000, 0.0000],\n        [0.2750, 0.7250, 0.0000],\n        [0.2553, 0.4197, 0.3250]])\nAttention 输出：\ntensor([[ 0.7279,  1.3616],\n        [-0.1001,  1.0119],\n        [ 0.0460,  0.9594]])\n当前最后一个位置的输出： tensor([0.0460, 0.9594])\n检查用目标： tensor([1., 0.])\n损失： 0.9152989387512207\n查询层权重的梯度：\ntensor([[0.0227, 0.0227],\n        [0.0611, 0.0611]])\n键层权重的梯度：\ntensor([[-0.0539,  0.1212],\n        [-0.0231,  0.0520]])\n值层权重的梯度：\ntensor([[-1.1976, -1.3544],\n        [ 1.2044,  1.3621]])\n查询层更新前的权重：\ntensor([[ 0.5406,  0.5869],\n        [-0.1657,  0.6496]])\n查询层更新后的权重：\ntensor([[ 0.5399,  0.5862],\n        [-0.1675,  0.6477]])\n更新前的最后位置输出： tensor([0.0460, 0.9594])\n更新后的最后位置输出： tensor([0.1501, 0.8565])\n更新前的损失： 0.9152989387512207\n更新后的损失： 0.727946400642395\n两份序列：\ntensor([[[2., 1.],\n         [1., 2.],\n         [1., 1.]],\n\n        [[3., 2.],\n         [2., 3.],\n         [2., 2.]]])\n批次输入形状： torch.Size([2, 3, 2])\nQ 形状： torch.Size([2, 3, 2])\nK 形状： torch.Size([2, 3, 2])\nV 形状： torch.Size([2, 3, 2])\n权重形状： torch.Size([2, 3, 3])\n输出形状： torch.Size([2, 3, 2])\n每份序列、每个查询的权重总和：\ntensor([[1.0000, 1.0000, 1.0000],\n        [1.0000, 1.0000, 1.0000]])\n第一份序列的输出变化：\ntensor([[0., 0.],\n        [0., 0.],\n        [0., 0.]])\n第二份序列的输出变化：\ntensor([[1.8115, 6.6996],\n        [1.5970, 6.6078],\n        [1.4752, 6.6323]])\n通过：修改第二份序列，没有影响第一份序列的输出\n",
+      "stderr": ""
+    }
+  ],
+  "checks": [
+    {
+      "module": "M03",
+      "name": "training_only_vocabulary_roundtrip_and_unknowns",
+      "status": "pass",
+      "details": {
+        "vocab_size_including_unk": 11,
+        "train_characters": 18,
+        "held_out_unknown_characters": [
+          "狗",
+          "猫"
+        ],
+        "held_out_decoded": {
+          "validation": "我爱<unk>。",
+          "test": "我爱<unk>。"
+        }
+      }
+    },
+    {
+      "module": "M04",
+      "name": "shifted_windows_stay_within_each_split_and_keep_last_batch",
+      "status": "pass",
+      "details": {
+        "train": {
+          "token_count": 18,
+          "window_count": 15,
+          "batch_shapes": [
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "first_window": [
+            [
+              7,
+              8,
+              5
+            ],
+            [
+              8,
+              5,
+              2
+            ]
+          ]
+        },
+        "validation": {
+          "token_count": 4,
+          "window_count": 1,
+          "batch_shapes": [
+            [
+              1,
+              3
+            ]
+          ],
+          "first_window": [
+            [
+              7,
+              8,
+              0
+            ],
+            [
+              8,
+              0,
+              1
+            ]
+          ]
+        },
+        "test": {
+          "token_count": 4,
+          "window_count": 1,
+          "batch_shapes": [
+            [
+              1,
+              3
+            ]
+          ],
+          "first_window": [
+            [
+              7,
+              8,
+              0
+            ],
+            [
+              8,
+              0,
+              1
+            ]
+          ]
+        },
+        "empty_loader_rejected": true
+      }
+    },
+    {
+      "module": "M05",
+      "name": "independent_scalar_reference_and_loop_matrix_equivalence",
+      "status": "pass",
+      "details": {
+        "hand_scores_row_1": [
+          7.0,
+          5.0,
+          4.0
+        ],
+        "hand_weights_row_1": [
+          0.7336811064968891,
+          0.17837015472760456,
+          0.08794873877550642
+        ],
+        "hand_output_row_1": [
+          3.4673622129937782,
+          3.535110464182814
+        ],
+        "matrix_output_row_1": [
+          3.4673619270324707,
+          3.5351102352142334
+        ],
+        "row_weight_sums": [
+          0.9999999403953552,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "module": "M05",
+      "name": "changing_v_preserves_weights_and_changes_only_its_feature",
+      "status": "pass",
+      "details": {
+        "perturbation": "V at source position 2, feature 2 += 10",
+        "weight_change_max": 0.0,
+        "output_delta": [
+          [
+            0.0,
+            1.7837011814117432
+          ],
+          [
+            0.0,
+            0.5013298988342285
+          ],
+          [
+            0.0,
+            1.6357908248901367
+          ]
+        ],
+        "predicted_delta": [
+          [
+            0.0,
+            1.7837013006210327
+          ],
+          [
+            0.0,
+            0.5013299584388733
+          ],
+          [
+            0.0,
+            1.6357910633087158
+          ]
+        ]
+      }
+    },
+    {
+      "module": "M06",
+      "name": "causal_future_perturbation_unmasked_control_and_single_token",
+      "status": "pass",
+      "details": {
+        "causal_prefix_delta_max": 0.0,
+        "unmasked_prefix_delta_max": 9.849538803100586,
+        "t1_weight": [
+          [
+            1.0
+          ]
+        ],
+        "t1_output": [
+          [
+            4.0,
+            3.0
+          ]
+        ]
+      }
+    },
+    {
+      "module": "M07",
+      "name": "batch_isolation_shapes_finite_gradients_and_optimizer_boundary",
+      "status": "pass",
+      "details": {
+        "output_shape": [
+          2,
+          3,
+          2
+        ],
+        "weights_shape": [
+          2,
+          3,
+          3
+        ],
+        "unmodified_sample_delta_max": 0.0,
+        "modified_sample_delta_max": 7.4695611000061035,
+        "other_sample_input_gradient_max": 0.0,
+        "projection_gradient_norms": {
+          "Q": 0.009266693145036697,
+          "K": 0.04833822324872017,
+          "V": 2.1862542629241943
+        },
+        "backward_alone_kept_parameters_unchanged": true,
+        "optimizer_parameter_delta_max": {
+          "Q": 0.0001919269561767578,
+          "K": 0.0011198818683624268,
+          "V": 0.04588159918785095
+        },
+        "batch_fixture_loss_before": 0.5730739235877991,
+        "batch_fixture_loss_after": 0.44541171193122864,
+        "original_demo_loss_before": 0.9152989387512207,
+        "original_demo_loss_after": 0.727946400642395
+      }
+    }
+  ],
+  "scope_limits": [
+    "Tiny authored text fixtures, not a sourced public corpus or held-out evaluation benchmark.",
+    "Attention classification demo trains only its output layer on fixed features.",
+    "M07 exercises numerical inputs and an MSE target, not end-to-end text language-model training.",
+    "This assistant-run audit does not establish independent implementation or lasting conceptual mastery."
+  ],
+  "status": "pass"
+}
