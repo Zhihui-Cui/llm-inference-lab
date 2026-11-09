@@ -1,0 +1,61 @@
+{
+  "executor": "assistant",
+  "status": "passed",
+  "time_utc": "2026-11-09T08:33:18.248873+00:00",
+  "python": "3.12.3",
+  "torch": "2.14.1+cpu",
+  "device": "cpu",
+  "dtype": "torch.float32",
+  "seed_for_this_verification": 42,
+  "rtol": 1e-05,
+  "atol": 1e-06,
+  "sha256": {
+    "decoder_block.py": "a19f0a4cf6a7c9bdd8423c3b1b97599d6753c454d1c0361d051c6870159abeec",
+    "char_vocab.py": "9eb31cb8901ec6919fab1569034eac93a5ded386336589a892e0fd88be65817d"
+  },
+  "shapes": {
+    "block_input": [
+      2,
+      3,
+      2
+    ],
+    "block_output": [
+      2,
+      3,
+      2
+    ],
+    "logits": [
+      2,
+      3,
+      11
+    ],
+    "flat_scores": [
+      6,
+      11
+    ],
+    "flat_targets": [
+      6
+    ]
+  },
+  "max_abs_errors": {
+    "batch_vs_separate": 5.960464477539063e-08,
+    "prefix": 0.0,
+    "zero_branches_vs_input": 0.0,
+    "ce_vs_selected_log_probs": 0.0
+  },
+  "target_characters": [
+    "爱学习",
+    "码帮助"
+  ],
+  "targets_flat": [
+    8,
+    5,
+    2,
+    9,
+    6,
+    4
+  ],
+  "batch_loss": 2.689199447631836,
+  "training_updates": 0,
+  "entrypoint_stdout": "tensor([[ -0.1095,   2.5927,  -0.1163,   1.0847,  -0.2791,  -2.7340,   0.6314,\n           1.0190,   1.0176,  -0.5168,  -0.9698],\n        [  0.9603,  10.3343,   2.8586,   6.8892,   1.2965, -13.0539,  -2.2091,\n           5.4111,   3.6663,   2.9647,  -3.5688],\n        [ -0.2174,   4.2549,  -0.1451,   1.9114,  -0.6177,  -4.2622,   1.0037,\n           1.8831,   1.3101,  -0.7206,  -1.8554]], grad_fn=<AddmmBackward0>)\n读到“我爱”时，“学”的概率： 6.681279834941378e-11\n用这个概率手算的损失： 23.429126739501953\nloss_pos2： 23.429126739501953\n三个位置各自的损失： [2.29020094871521, 23.429126739501953, 4.678663730621338]\n三个数的平均： 10.13266372680664 整句 loss： 10.13266372680664\n分数和目标的形状： torch.Size([6, 11]) torch.Size([6])\n六个位置的平均损失： 2.689199447631836\n"
+}
