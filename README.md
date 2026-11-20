@@ -2,7 +2,7 @@
 
 持续学习项目：独立训练 → Transformer/KV Cache → GPU 小实验 → 单卡推理评测 → 一个服务诊断专题。
 
-更新：2026-11-20，W11（11/15–11/21）。M13 固定小批次训练诊断已在指导下完成。六个位置的平均损失在 80 次 SGD 更新中从 2.46381 降至 1.03427。下一项是 M14 隔离文本上的训练与验证。
+更新于 2026-11-20，W11（11/15–11/21）。M13–M16 已在指导下完成。M14 四轮后训练损失降至 2.13635，验证窗口损失升至 1.91739。M16 重载后对“我爱”的 22 个分数与参考模型完全一致。下一项是 [M14–M16 综合手写复测第 1 题](learning/02_text/assignments/m14_m16_assignment.py)。
 
 [总控与本周任务](https://github.com/Zhihui-Cui/ai-infra-roadmap/blob/main/now.md) · [阶段计划](docs/learning-plan.md) · [训练练习](learning/01_training/README.md) · [文本练习与作业](learning/02_text/README.md) · [按问题查练习](learning/previous_practice.md)
 
@@ -10,7 +10,7 @@
 
 | 截至日期 | 学习周 | 类型 | 文档 |
 |---|---|---|---|
-| 2026-11-20 | W11 | 阶段记录 | [M13：固定小批次训练诊断](reports/2026-11-20-W11-checkpoint.md) |
+| 2026-11-20 | W11 | 阶段记录 | [M13–M16：固定批次训练、验证、生成与重载](reports/2026-11-20-W11-checkpoint.md) |
 | 2026-11-09 | W10 | 阶段记录 | [M11–M12：从 decoder block 到逐 token 损失](reports/2026-11-09-W10-checkpoint.md) |
 | 2026-11-06 | W09 | 阶段记录 | [M03–M10 整体验收](reports/2026-11-06-W09-checkpoint.md) |
 | 2026-11-03 | W09 | 阶段记录 | [Attention 练习进度与 M08 未验收](reports/2026-11-03-W09-checkpoint.md) |
@@ -46,11 +46,11 @@ python learning/01_training/04_nonlinear_regression/fit_square_with_mlp.py
 1. 两次指导下故障闭环、标准化和二分类入门已完成，不再作为未学任务重复安排。
 2. 类别不平衡、Precision/Recall 统计、无报警零分母案例、按代价选择阈值及独立恢复阈值已完成指导练习（见 10/23 阶段记录，依据学习者提供的运行输出）。10/24 已完成三分类及混淆矩阵指导练习；10/25 回顾已能正确说明指标分母，并本人确认保存加载打印结果一致。详细证据与验证边界见 W07 周复盘。
 3. M01 于 10/26 指导下完成：配置/种子/索引保存与读回、全精度重载及最终测试有本人运行输出；数据恢复有输出，隔离/覆盖检查依据本人明确确认。实际训练脚本、恢复脚本与配置已在 [60d1e96](https://github.com/Zhihui-Cui/llm-inference-lab/commit/60d1e9655e26b27da06279112ad12a32d9f9a77a) 归档。归档恢复脚本仅包含重建和打印，不含隔离/覆盖断言；证据口径见 [W08 记录第 5 节](reports/2026-10-25-W08-checkpoint.md)。
-4. M02 保持指导下完成；M03–M10 已完成整体核验，见 [验收记录](reports/2026-11-06-W09-checkpoint.md)和 [文本与 Attention 索引](learning/02_text/README.md)。M11–M12 的学习证据见 [W10 记录](reports/2026-11-09-W10-checkpoint.md)。M13 的固定批次训练结果与下一项 M14 见 [W11 记录](reports/2026-11-20-W11-checkpoint.md)。
+4. M02 保持指导下完成；M03–M10 已完成整体核验，见 [验收记录](reports/2026-11-06-W09-checkpoint.md)和 [文本与 Attention 索引](learning/02_text/README.md)。M11–M12 的学习证据见 [W10 记录](reports/2026-11-09-W10-checkpoint.md)。M13 的固定批次训练和 M14–M16 指导实验 见 [W11 记录](reports/2026-11-20-W11-checkpoint.md)。
 
 任务入口：[W06 #1](https://github.com/Zhihui-Cui/llm-inference-lab/issues/1) · [W07 #2](https://github.com/Zhihui-Cui/llm-inference-lab/issues/2) · [W08 / G1 #3](https://github.com/Zhihui-Cui/llm-inference-lab/issues/3)。
 
-已收尾：[M03–M10 #4](https://github.com/Zhihui-Cui/llm-inference-lab/issues/4)。当前阶段：[M11–M16 #5](https://github.com/Zhihui-Cui/llm-inference-lab/issues/5)。
+已收尾：[M03–M10 #4](https://github.com/Zhihui-Cui/llm-inference-lab/issues/4)。指导阶段已收尾：[M11–M16 #5](https://github.com/Zhihui-Cui/llm-inference-lab/issues/5)。
 
 ## 仓库边界
 

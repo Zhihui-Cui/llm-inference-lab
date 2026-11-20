@@ -72,7 +72,8 @@ train_loader = make_loader(train_samples, batch_size=2, shuffle=True)
 validation_loader = make_loader(validation_samples, batch_size=2, shuffle=False)
 test_loader = make_loader(test_samples, batch_size=2, shuffle=False)
 
-for batch_inputs, batch_targets in validation_loader:
-    print("验证输入：", batch_inputs)
-    print("验证目标：", batch_targets)
-    print("验证输入 shape：", batch_inputs.shape)
+if __name__ == "__main__":
+    for batch_inputs, batch_targets in validation_loader:
+        print("验证输入：", batch_inputs)
+        print("验证目标：", batch_targets)
+        print("验证输入 shape：", batch_inputs.shape)

@@ -1,8 +1,18 @@
 # 文本、注意力与固定批次训练
 
-**M13 固定小批次训练诊断已在指导下完成。** 综合作业的 80 步损失从 2.46381 降到 1.03427。[W11 实测与验收记录](../../reports/2026-11-20-W11-checkpoint.md) · [综合作业](assignments/m11_m13_assignment.py)。下一项为 M14 隔离文本训练与验证。
+**M13 固定小批次训练诊断已在指导下完成。** 综合作业的 80 步损失从 2.46381 降到 1.03427。[W11 实测与验收记录](../../reports/2026-11-20-W11-checkpoint.md) · [综合作业](assignments/m11_m13_assignment.py)。M14 第一课：[比较同一前缀在训练和验证中的目标](m14_validation/m14_01_validation_target.py)。 [第二课：取出验证窗口](m14_validation/m14_02_validation_window.py)。 [第三课：给一个验证窗口评分](m14_validation/m14_03_validation_loss.py)。 [第四课：训练一步再给同一窗口评分](m14_validation/m14_04_one_train_step.py)。 [第五课：按目标数汇总损失](m14_validation/m14_05_mean_token_loss.py)。 [第六课：训练一轮，比较两套题](m14_validation/m14_06_train_one_epoch.py)。 [第七课：连续四轮观察验证损失](m14_validation/m14_07_four_epochs.py)。
 
-在 WSL 仓库根目录运行：
+M14 四轮训练与验证对照已完成。M15 从 [给定前缀，续写一个字](m15_generation/m15_01_next_character.py) 开始。 [第二课：把模型选出的字放回输入](m15_generation/m15_02_append_and_predict.py)。 [第三课：连续续写三个字](m15_generation/m15_03_greedy_loop.py)。 [第四课：达到总长度上限就停](m15_generation/m15_04_length_limit.py)。 [第五课：遇到空前缀怎么办](m15_generation/m15_05_empty_prefix.py)。
+
+M15 已验证逐字生成、长度上限和空前缀。M16 第一课：[保存权重，读回位置表](m16_reload/m16_01_save_weights.py)。 [第二课：把权重装进新模型](m16_reload/m16_02_load_weights.py)。 [第三课：给同一前缀打分，核对重载结果](m16_reload/m16_03_compare_logits.py)。 [第四课：把权重、模型配置和词表一起保存](m16_reload/m16_04_pack_checkpoint.py)。 [第五课：从 checkpoint 一条命令续写](m16_reload/m16_05_generate.py)。
+
+M16 已在新进程重载并复现“我爱助”。当前从 [M14–M16 综合手写复测](assignments/m14_m16_assignment.py) 第 1 题开始。运行命令如下。
+
+```bash
+.venv/bin/python learning/02_text/assignments/m14_m16_assignment.py 1
+```
+
+复查 M11–M13 综合作业时，在 WSL 仓库根目录运行：
 
 ```bash
 .venv/bin/python learning/02_text/assignments/m11_m13_assignment.py
@@ -18,6 +28,7 @@
 | 怎么得到每个位置的表示，再用下一字打分？ | [M11 decoder block 与前缀检查](m11_decoder/m11_decoder_block.py) → [M12·1 “我爱 → 学”的单题损失](m11_decoder/m12_01_single_loss.py) → [M12·2 两句六题的平均损失](m11_decoder/m12_02_fixed_batch.py) |
 | 同一批题反复训练，怎样看出训练链路接通？ | [M13 固定批次训练](m13_training/)；各个实验的打开顺序见下表。 |
 | 学完整个阶段后，能否自己重写？ | [M11–M13 阶段作业与分题自测](assignments/m11_m13_assignment.py) |
+| 能否独立完成评分、训练一轮、逐字生成和重载？ | [M14–M16 阶段作业与分题自测](assignments/m14_m16_assignment.py) |
 
 ## M13 · 一次打开一个文件
 
