@@ -93,8 +93,9 @@ def main() -> None:
 
     assert absolute_error < 0.05, "预测误差超过允许范围"
 
-    # 参数文件放在当前脚本旁边，扩展名为 .pth。
-    model_path = Path(__file__).with_suffix(".pth")
+    # 参数文件放在本主题的 artifacts 目录，扩展名为 .pth。
+    model_path = Path(__file__).resolve().parent / "artifacts" / "linear_regression_nn.pth"
+    model_path.parent.mkdir(exist_ok=True)
 
     print("准备保存的参数：", model.state_dict())
     torch.save(model.state_dict(), model_path)

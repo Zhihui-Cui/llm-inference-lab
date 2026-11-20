@@ -1,6 +1,6 @@
 # llm-inference-lab：一个持续主项目
 
-当前状态（2026-11-09）：M03–M10 已整体核验，M11–M12 在指导下完成并通过代码检查。当前已接通字符与位置 Embedding、因果 decoder block、词表 logits 和逐 token 交叉熵。见 [W10 阶段记录](../reports/2026-11-09-W10-checkpoint.md)。下一项为 [M13](https://github.com/Zhihui-Cui/llm-inference-lab/issues/5) 的固定小批次训练诊断。下方周排期和旧独立验收清单保留为历史规划。
+当前状态（2026-11-20）：M03–M10 已整体验证，M11–M13 在指导下完成。固定小批次训练的梯度、一步参数变化和 80 步损失已通过核验。见 [W10 记录](../reports/2026-11-09-W10-checkpoint.md) 和 [W11 记录](../reports/2026-11-20-W11-checkpoint.md)。下一项是 [M14 隔离文本训练与验证](https://github.com/Zhihui-Cui/llm-inference-lab/issues/5)。下方周排期和独立验收清单保留为历史规划。
 
 2026-10-25：标准化、二分类指标与阈值、三分类及混淆矩阵已完成指导练习；本人确认三分类保存前后打印结果一致，全精度容差验证仍分别记录。G1 尚待综合独立变体验收，下一步完善实验配置和划分追溯，不重复抄写已有训练流程。[W07 周复盘](../reports/2026-10-24-W07-review.md)。以下包含独立要求的复选项继续按完整标准验收。
 
@@ -60,7 +60,7 @@ W23–W26 保留缓冲、面试和申请，不再开新框架。日期是目标�
 - [ ] 先手算简单标量导数，再用autograd核对，解释矩阵shape和广播。
 - [ ] 自己写小回归前向、loss、清梯度、backward、参数更新。
 - [ ] 固定种子，保存真实loss，解释一次参数变化与一个错误。
-建议路径：learning/01_training/tensor_autograd.py、linear_regression.py；由本人新建实现。
+建议路径：learning/01_training/01_tensors/gradients_and_manual_update.py、learning/01_training/02_linear_regression/fit_one_feature.py；由本人新建实现。
 
 ### W07：独立 MLP 训练、验证和保存加载
 

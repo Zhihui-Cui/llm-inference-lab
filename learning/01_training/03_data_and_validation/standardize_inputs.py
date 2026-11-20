@@ -199,9 +199,8 @@ def main() -> None:
             )
 
     # 6. 新增：参数与预处理统计量一起保存。
-    model_path = Path(__file__).with_name(
-        "linear_standardized_checkpoint.pth"
-    )
+    model_path = Path(__file__).resolve().parent / "artifacts" / "standardize_inputs.pth"
+    model_path.parent.mkdir(exist_ok=True)
 
     checkpoint = {
         "model_state_dict": model.state_dict(),

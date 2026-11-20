@@ -112,9 +112,8 @@ def main() -> None:
     epochs_without_improvement = 0
     update_count = 0
 
-    best_path = Path(__file__).with_name(
-        "linear_review_weights.pth"
-    )
+    best_path = Path(__file__).resolve().parent / "artifacts" / "linear_review_weights.pth"
+    best_path.parent.mkdir(exist_ok=True)
 
     # 5. 训练：每批更新参数，每轮验证一次。
     for epoch in range(num_epochs):

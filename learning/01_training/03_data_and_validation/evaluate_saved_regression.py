@@ -6,7 +6,7 @@ from torch import nn
 
 def main() -> None:
     # 1. 创建相同结构，并加载已经选好的参数。
-    model_path = Path(__file__).with_name("linear_review_weights.pth")
+    model_path = Path(__file__).resolve().parent / "artifacts" / "linear_review_weights.pth"
 
     model = nn.Linear(1, 1)
     saved_state = torch.load(

@@ -36,7 +36,7 @@
 通过：本次数值检查全部达标
 ```
 
-固定输入 [-2.4,0.3,2.1]，保存前后输出均约 [-4.3,-0.25,2.45]，allclose 断言通过。脚本：[linear_independent_check.py](../learning/01_training/linear_independent_check.py)。
+固定输入 [-2.4,0.3,2.1]，保存前后输出均约 [-4.3,-0.25,2.45]，allclose 断言通过。脚本：[linear_independent_check.py](../learning/01_training/06_integrated_practice/m01_train_and_reload.py)。
 
 **结论：完整流程和数值检查通过；本次有完整参考实现，不计作无参考独立复测通过。** 不要求背下打印格式或所有 API；要求能独立组织数据形状、循环、梯度更新和评估职责。
 

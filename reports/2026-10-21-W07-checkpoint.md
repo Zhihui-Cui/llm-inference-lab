@@ -24,23 +24,23 @@
 人工故障练习：保留 backward，注释 optimizer.step。预期：能算梯度，参数不变，同一完整训练集的 MSE 不变。首次打印梯度的位置不对导致 NoneType.item 错误，经提示将观察放在 backward 后。
 本人历史运行：w=0.7631722688674927、b=0.4071751832962036 始终不变；训练 MSE=3.281079，验证 MSE=2.327575。不同批次的梯度变化，不代表参数更新。原日志“累计更新 2000 次”在该故障中实际是处理批次数，真实参数更新为零。
 恢复 step 后：w≈1.5、b≈-0.7，验证 MSE=8.295586e-14、测试 MSE=8.455459e-14、最大绝对误差=3.576279e-07。两次初始化不同，这是现象/修复验证，不是固定初始状态的数值对照。
-当前 [linear_independent_check.py](../learning/01_training/linear_independent_check.py) 保存修复版本，前两轮第一批打印参数和梯度；参数在 step 后打印，梯度来自该次 step 前的反传，不能当作打印时参数处的新梯度。
+当前 [linear_independent_check.py](../learning/01_training/06_integrated_practice/m01_train_and_reload.py) 保存修复版本，前两轮第一批打印参数和梯度；参数在 step 后打印，梯度来自该次 step 前的反传，不能当作打印时参数处的新梯度。
 
 ## 故障 2：广播让一一对应变成两两比较
 
-[broadcast_debug.py](../learning/01_training/broadcast_debug.py)：预测 [3,1]，标签 [3]，虽然对应数值均为 1、2、3，相减却得到 [3,3]，MSE=1.3333333730697632。
+[broadcast_debug.py](../learning/01_training/01_tensors/check_broadcasting.py)：预测 [3,1]，标签 [3]，虽然对应数值均为 1、2、3，相减却得到 [3,3]，MSE=1.3333333730697632。
 假设并检查：广播发生在减法前，错误并非优化器造成。将这组一维标签 reshape(-1,1) 后，差值为 [3,1] 的全零，MSE=0，断言通过。生产检查需比较完整 shape 和非空；reshape 不应破坏每行一个样本的语义。为指导下的最小故障复现，非独立发现未知错误。
 
 ## 标准化与必要配置保存
 
-[standardization_practice.py](../learning/01_training/standardization_practice.py)：120 点，y=1.5x-0.7，80/20/20 划分，seed=42，batch=8，SGD lr=0.03，200 epochs/2,000 次更新。
+[standardization_practice.py](../learning/01_training/03_data_and_validation/standardize_inputs.py)：120 点，y=1.5x-0.7，80/20/20 划分，seed=42，batch=8，SGD lr=0.03，200 epochs/2,000 次更新。
 先划分，再仅用训练集按列计算均值和总体标准差；验证/测试/新输入复用同一统计量。零标准差检查拒绝常量特征。仅标准化输入，标签不变。
 本人输出：均值≈0.0687、标准差≈1.8363；标准化坐标 w=2.754403、b=-0.596954，换算原始坐标 w=1.5、b=-0.7。验证 MSE=6.357581e-13、测试 MSE=4.501288e-13、最大绝对误差=1.430511e-06。
 checkpoint 保存 model_state_dict/input_mean/input_std；加载后固定输入预测 [-4.3,-0.25,2.45] 一致。此实验验证流程正确，不证明标准化必然加速。
 
 ## 二分类：从概率到判断规则
 
-[binary_classification.py](../learning/01_training/binary_classification.py)：四个教学包裹重量 1、2、4、5，对应标签 0、0、1、1；Linear(1,1)，seed=42，SGD lr=0.1，1,000 次全批更新。
+[binary_classification.py](../learning/01_training/05_classification/train_binary.py)：四个教学包裹重量 1、2、4、5，对应标签 0、0、1、1；Linear(1,1)，seed=42，SGD lr=0.1，1,000 次全批更新。
 BCEWithLogitsLoss 接收原始分数，内部结合 sigmoid 与交叉熵；展示时 sigmoid 转概率，再比较阈值。第 100 次更新前损失 0.404350，第 1000 次更新前 0.075785；不是训练初始损失和最终更新后损失。
 验证输入 2.5、2.9、3.5，标签 0、0、1，重件概率 35.12%、54.84%、80.32%。
 
@@ -55,7 +55,7 @@ BCEWithLogitsLoss 接收原始分数，内部结合 sigmoid 与交叉熵；展�
 在阈值 0.5 下，本人正确计算 Precision=1/2=50%、Recall=1/1=100%；阈值 0.9 无预测正类，Precision 分母为零，需要明确约定，尚未实现通用函数。
 
 固定阈值 0.8 的六个教学测试输入 1.5、2.3、2.8、3.1、3.4、4.5，标签按重量≥3 为重件构造：准确率 66.7%，误报 0、漏报 2（3.1 和 3.4）。保留失败结果，不为追求全对修改测试答案。已用于讲解/观察的这些数据今后不能再充当全新盲测。已知确定性业务规则本可直接编码，本实验用于学习分类流程，非真实业务性能结论。
-保存 model_state_dict 和 threshold，运行独立脚本 [predict_binary.py](../learning/01_training/predict_binary.py)：恢复阈值 0.8；2.8/3.1/4.5 的概率分别 49.81%/64.53%/96.85%，类别 0/0/1，与保存前一致，连同原有漏报一起恢复。
+保存 model_state_dict 和 threshold，运行独立脚本 [predict_binary.py](../learning/01_training/05_classification/predict_binary.py)：恢复阈值 0.8；2.8/3.1/4.5 的概率分别 49.81%/64.53%/96.85%，类别 0/0/1，与保存前一致，连同原有漏报一起恢复。
 
 ## 本次归档核验与复现
 

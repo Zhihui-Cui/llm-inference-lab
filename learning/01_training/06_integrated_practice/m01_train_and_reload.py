@@ -175,9 +175,8 @@ def main() -> None:
     validation_loss = evaluate(model, validation_loader)
 
     # 6. 保存本次实验的最后一轮参数、配置和实际划分。
-    model_path = Path(__file__).with_name(
-        "linear_independent_weights.pth"
-    )
+    model_path = Path(__file__).resolve().parent / "artifacts" / "linear_independent_weights.pth"
+    model_path.parent.mkdir(exist_ok=True)
     torch.save(model.state_dict(), model_path)
 
     print(f"\n参数保存位置：{model_path}")

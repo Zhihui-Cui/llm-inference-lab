@@ -1,48 +1,124 @@
-# 训练阶段练习索引
+# 训练基础练习
 
-截至 2026-10-21。保存学习过程中的各阶段版本，未统一重构为训练框架。允许查语法/API；在用户明确请求时提供过完整参考实现，因此“运行通过”和“独立验收”分开记录。
+按问题找代码。每个目录对应一个主题，从短实验逐步走到完整训练。需要回忆 M13 的梯度和更新时，先看[反向传播与手动更新](01_tensors/gradients_and_manual_update.py)；想回忆正确字的损失，查看[多分类交叉熵](05_classification/multiclass_cross_entropy.py)。
 
-## 建议阅读顺序
+| 学习顺序 | 什么时候回来查 |
+| --- | --- |
+| [1. 张量与梯度](01_tensors/) | 怎样读形状、算损失、解释一次参数更新？ |
+| [2. 线性回归](02_linear_regression/) | 怎样把手写权重换成 Linear 和 SGD？ |
+| [3. 数据与验证](03_data_and_validation/) | 怎样分批、选模型、标准化并检查误差？ |
+| [4. 非线性回归](04_nonlinear_regression/) | MLP 怎样拟合平方函数、保存最佳模型？ |
+| [5. 分类](05_classification/) | 怎样从分数得到损失、类别和评价指标？ |
+| [6. 综合练习](06_integrated_practice/) | 怎样独立串起训练、保存、划分恢复和复核？ |
 
-| 阶段 | 文件 | 核心内容 |
-|---|---|---|
-| Python MSE | [mse_practice.py](mse_practice.py) | 数值返回、长度/空输入异常、负数案例 |
-| Tensor | [tensor_mse.py](tensor_mse.py)、[tensor_shapes.py](tensor_shapes.py) | mean()、标量 shape、广播与 reshape |
-| 梯度 | [tensor_autograd.py](tensor_autograd.py) | backward、grad 累加、手动更新、清零 |
-| 单特征回归 | [linear_regression.py](linear_regression.py)、[变体](linear_regression_independent.py) | 手写参数更新；变体 y=-3x+2 |
-| 矩阵与多特征 | [matrix_prediction.py](matrix_prediction.py)、[双特征训练](linear_regression_two_features.py) | @、shape、两个权重 |
-| 模块和优化器 | [nn_linear_practice.py](nn_linear_practice.py)、[linear_regression_nn.py](linear_regression_nn.py) | Linear、SGD、验证、保存加载 |
-| 只预测 | [predict_linear.py](predict_linear.py) | 先运行 linear_regression_nn.py 生成参数 |
-| 分批训练 | [dataloader_practice.py](dataloader_practice.py) | Dataset、DataLoader、epoch/batch、加权 MSE |
-| 非线性拟合 | [mlp_square.py](mlp_square.py) | Linear→ReLU→Linear；训练误差不等于泛化误差 |
-| 最佳参数 | [mlp_best_model](mlp_best_model) | 验证集选模型、立即保存、重载核对；原文件无 .py 后缀 |
-| 数据划分 | [dataset_split.py](dataset_split.py) | random_split、Subset、末批不足 batch_size |
-| 完整线性流程 | [linear_review.py](linear_review.py) | 60/20/20 划分、最佳参数、早停、最终测试 |
-| 单独测试 | [test_linear_review.py](test_linear_review.py) | 先运行 linear_review.py；固定输入误差检查 |
-| 含噪声实验 | [linear_noisy.py](linear_noisy.py) | 噪声标准差 0.2，误差不应追求到零 |
-| 综合复测 | [linear_independent_check.py](linear_independent_check.py) | 120 样本、80/20/20、2,000 次更新、重载和数值断言 |
+## 1. 张量与梯度
 
-## 10/21 新增与更新
+- [用 Python 算均方误差](01_tensors/mse_in_python.py) · `mse_in_python.py`
+- [用张量计算相同的 MSE](01_tensors/mse_with_tensors.py) · `mse_with_tensors.py`
+- [看行、列和标量的形状](01_tensors/tensor_shapes.py) · `tensor_shapes.py`
+- [定位意外广播](01_tensors/check_broadcasting.py) · `check_broadcasting.py`
+- [反向传播、累积梯度与手动更新](01_tensors/gradients_and_manual_update.py) · `gradients_and_manual_update.py`
+- [矩阵乘法如何给每个样本产生预测](01_tensors/matrix_prediction.py) · `matrix_prediction.py`
 
-| 文件 | 内容 |
-|---|---|
-| [broadcast_debug.py](broadcast_debug.py) | 广播错误的修复前后对照 |
-| [standardization_practice.py](standardization_practice.py) | 训练集统计量、标准化、必要配置保存加载 |
-| [binary_classification.py](binary_classification.py) | BCE、阈值、误报/漏报、验证网格搜索、教学测试、模型与阈值保存 |
-| [predict_binary.py](predict_binary.py) | 先运行 binary_classification，再独立恢复参数与阈值 |
-| [linear_independent_check.py](linear_independent_check.py) | 恢复 step 后的调试版本；参数在 step 后打印，梯度来自更新前 |
+## 2. 线性回归
 
-[本次详细报告和核验日志](../../reports/2026-10-21-W07-checkpoint.md)。标准化和二分类各自独立，二分类没有输入标准化。仅保存推理状态，不包括恢复优化器训练所需的状态。
+- [手写单特征回归](02_linear_regression/fit_one_feature.py) · `fit_one_feature.py`
+- [换成负斜率重新拟合](02_linear_regression/fit_negative_slope.py) · `fit_negative_slope.py`
+- [两个特征怎样共同预测](02_linear_regression/fit_two_features.py) · `fit_two_features.py`
+- [查看 Linear 的参数与输出](02_linear_regression/inspect_linear_layer.py) · `inspect_linear_layer.py`
+- [用 Linear 和 SGD 训练、保存](02_linear_regression/train_with_sgd.py) · `train_with_sgd.py`
+- [加载线性层权重做预测](02_linear_regression/predict_from_weights.py) · `predict_from_weights.py`
 
-所有脚本从仓库根目录用 python 加对应路径运行。无后缀的 MLP 文件也是 Python 文本，可用 python learning/01_training/mlp_best_model 运行。保存文件位于脚本旁边；训练脚本可能覆盖自己的旧参数文件。
+## 3. 数据与验证
 
-## 当前证据如何读
+- [用 DataLoader 分批训练](03_data_and_validation/train_in_batches.py) · `train_in_batches.py`
+- [划分训练、验证、测试样本](03_data_and_validation/split_dataset.py) · `split_dataset.py`
+- [按验证误差选权重并早停](03_data_and_validation/select_best_regression.py) · `select_best_regression.py`
+- [加载所选权重，在固定输入上检验](03_data_and_validation/evaluate_saved_regression.py) · `evaluate_saved_regression.py`
+- [标签有噪声时观察误差](03_data_and_validation/fit_noisy_targets.py) · `fit_noisy_targets.py`
+- [用训练集统计量标准化输入](03_data_and_validation/standardize_inputs.py) · `standardize_inputs.py`
+- [串起标准化、训练、保存和重载](03_data_and_validation/train_standardized_regression.py) · `train_standardized_regression.py`
 
-- [W06 记录](../../reports/2026-10-17-W06-review.md)保存当时输出摘录；脚本后来可能调整了轮数/数据，不保证最新代码逐字复现每条历史日志。
-- [W07 快照](../../reports/2026-10-19-W07-checkpoint.md)分别记录 10/18 和 10/19，不提前记到 W06。
-- [本次核验](../../reports/2026-10-19-W07-verification.md)记录 19 个文件的语法检查及 6 个脚本的实际运行；其他脚本不冒充本次已运行。
-- 全数据评估按批大小加权；这里每个样本一个输出。train_eval_loader 使用训练集本身，不单独划走一份数据。
-- eval() 切换层的行为；no_grad() 控制计算图；backward() 求导；optimizer.step() 更新参数。当前 Linear/ReLU 的 train/eval 前向行为相同。
-- 训练 MSE 很小、单点误差通过、重载一致，各自只能证明对应检查；不能互相替代，也不能代替独立编写能力。
+## 4. 非线性回归
 
-部分脚本有随机种子，部分没有；不为历史实验补写不存在的种子。标准化统计量、分类阈值和两个指导下故障闭环已补齐；划分索引持久化、完整复现配置及延迟独立复做仍待完善。
+- [用两层网络拟合平方函数](04_nonlinear_regression/fit_square_with_mlp.py) · `fit_square_with_mlp.py`
+- [按验证集选 MLP 并重载](04_nonlinear_regression/select_best_mlp.py) · `select_best_mlp.py`
+
+## 5. 分类
+
+- [阈值、误报漏报与二分类指标](05_classification/binary_metrics.py) · `binary_metrics.py`
+- [训练二分类模型并选择阈值](05_classification/train_binary.py) · `train_binary.py`
+- [重载二分类模型和阈值](05_classification/predict_binary.py) · `predict_binary.py`
+- [用正确类别列计算交叉熵](05_classification/multiclass_cross_entropy.py) · `multiclass_cross_entropy.py`
+- [训练并保存多分类模型](05_classification/train_multiclass.py) · `train_multiclass.py`
+- [重载多分类模型做预测](05_classification/predict_multiclass.py) · `predict_multiclass.py`
+- [从预测与目标填写混淆矩阵](05_classification/confusion_matrix.py) · `confusion_matrix.py`
+
+## 6. 综合练习
+
+- [M01 · 训练、保存配置、重载与核对](06_integrated_practice/m01_train_and_reload.py) · `m01_train_and_reload.py`
+- [M01 · 从保存的索引恢复划分](06_integrated_practice/m01_restore_split.py) · `m01_restore_split.py`
+- [M02 · 评估、选优与加载的函数练习](06_integrated_practice/m02_checkpoint_functions.py) · `m02_checkpoint_functions.py`
+- [G1 · 两个输入特征的综合训练练习](06_integrated_practice/m02_two_feature_assignment.py) · `m02_two_feature_assignment.py`
+
+M02 函数练习用于复习局部操作，综合训练可独立运行。课程进度与独立掌握程度见当时的学习记录。
+
+## 训练和重载怎样配对
+
+| 想检查什么 | 第一次生成文件 | 再运行 |
+| --- | --- | --- |
+| 线性层预测 | [train_with_sgd.py](02_linear_regression/train_with_sgd.py) | [predict_from_weights.py](02_linear_regression/predict_from_weights.py) |
+| 验证集选出的线性权重 | [select_best_regression.py](03_data_and_validation/select_best_regression.py) | [evaluate_saved_regression.py](03_data_and_validation/evaluate_saved_regression.py) |
+| 二分类的权重与阈值 | [train_binary.py](05_classification/train_binary.py) | [predict_binary.py](05_classification/predict_binary.py) |
+| 多分类的权重 | [train_multiclass.py](05_classification/train_multiclass.py) | [predict_multiclass.py](05_classification/predict_multiclass.py) |
+| M01 的划分和配置 | [m01_train_and_reload.py](06_integrated_practice/m01_train_and_reload.py) | [m01_restore_split.py](06_integrated_practice/m01_restore_split.py) |
+
+从 WSL 仓库根目录运行，例如：
+
+```bash
+.venv/bin/python learning/01_training/01_tensors/gradients_and_manual_update.py
+```
+
+权重、运行配置和划分索引按主题保存在各自的 `artifacts/`。训练入口会写本次实验结果；仅重载时可直接用已有文件。两份标准化练习现在各写一份权重，迁移前已有的 `linear_standardized_checkpoint.pth` 保留在数据与验证主题的 `artifacts/` 中。
+
+[W06 学习记录](../../reports/2026-10-17-W06-review.md) · [W07 阶段记录](../../reports/2026-10-19-W07-checkpoint.md) · [训练脚本核验](../../reports/2026-10-19-W07-verification.md) · [标准化与二分类记录](../../reports/2026-10-21-W07-checkpoint.md)
+
+<details>
+<summary>用以前笔记中的文件名查找新位置</summary>
+
+| 原文件名 | 现在的位置 |
+| --- | --- |
+| `binary_classification.py` | [05_classification/train_binary.py](05_classification/train_binary.py) |
+| `broadcast_debug.py` | [01_tensors/check_broadcasting.py](01_tensors/check_broadcasting.py) |
+| `classification_metrics.py` | [05_classification/binary_metrics.py](05_classification/binary_metrics.py) |
+| `confusion_matrix_practice.py` | [05_classification/confusion_matrix.py](05_classification/confusion_matrix.py) |
+| `dataloader_practice.py` | [03_data_and_validation/train_in_batches.py](03_data_and_validation/train_in_batches.py) |
+| `dataset_split.py` | [03_data_and_validation/split_dataset.py](03_data_and_validation/split_dataset.py) |
+| `g1_two_feature_training.py` | [06_integrated_practice/m02_two_feature_assignment.py](06_integrated_practice/m02_two_feature_assignment.py) |
+| `linear_independent_check.py` | [06_integrated_practice/m01_train_and_reload.py](06_integrated_practice/m01_train_and_reload.py) |
+| `linear_noisy.py` | [03_data_and_validation/fit_noisy_targets.py](03_data_and_validation/fit_noisy_targets.py) |
+| `linear_regression.py` | [02_linear_regression/fit_one_feature.py](02_linear_regression/fit_one_feature.py) |
+| `linear_regression_independent.py` | [02_linear_regression/fit_negative_slope.py](02_linear_regression/fit_negative_slope.py) |
+| `linear_regression_nn.py` | [02_linear_regression/train_with_sgd.py](02_linear_regression/train_with_sgd.py) |
+| `linear_regression_two_features.py` | [02_linear_regression/fit_two_features.py](02_linear_regression/fit_two_features.py) |
+| `linear_review.py` | [03_data_and_validation/select_best_regression.py](03_data_and_validation/select_best_regression.py) |
+| `linear_standardized.py` | [03_data_and_validation/train_standardized_regression.py](03_data_and_validation/train_standardized_regression.py) |
+| `m02_part_practice.py` | [06_integrated_practice/m02_checkpoint_functions.py](06_integrated_practice/m02_checkpoint_functions.py) |
+| `matrix_prediction.py` | [01_tensors/matrix_prediction.py](01_tensors/matrix_prediction.py) |
+| `mlp_best_model` | [04_nonlinear_regression/select_best_mlp.py](04_nonlinear_regression/select_best_mlp.py) |
+| `mlp_square.py` | [04_nonlinear_regression/fit_square_with_mlp.py](04_nonlinear_regression/fit_square_with_mlp.py) |
+| `mse_practice.py` | [01_tensors/mse_in_python.py](01_tensors/mse_in_python.py) |
+| `multiclass_practice.py` | [05_classification/multiclass_cross_entropy.py](05_classification/multiclass_cross_entropy.py) |
+| `multiclass_training.py` | [05_classification/train_multiclass.py](05_classification/train_multiclass.py) |
+| `nn_linear_practice.py` | [02_linear_regression/inspect_linear_layer.py](02_linear_regression/inspect_linear_layer.py) |
+| `predict_binary.py` | [05_classification/predict_binary.py](05_classification/predict_binary.py) |
+| `predict_linear.py` | [02_linear_regression/predict_from_weights.py](02_linear_regression/predict_from_weights.py) |
+| `predict_multiclass.py` | [05_classification/predict_multiclass.py](05_classification/predict_multiclass.py) |
+| `restore_split_check.py` | [06_integrated_practice/m01_restore_split.py](06_integrated_practice/m01_restore_split.py) |
+| `standardization_practice.py` | [03_data_and_validation/standardize_inputs.py](03_data_and_validation/standardize_inputs.py) |
+| `tensor_autograd.py` | [01_tensors/gradients_and_manual_update.py](01_tensors/gradients_and_manual_update.py) |
+| `tensor_mse.py` | [01_tensors/mse_with_tensors.py](01_tensors/mse_with_tensors.py) |
+| `tensor_shapes.py` | [01_tensors/tensor_shapes.py](01_tensors/tensor_shapes.py) |
+| `test_linear_review.py` | [03_data_and_validation/evaluate_saved_regression.py](03_data_and_validation/evaluate_saved_regression.py) |
+
+</details>

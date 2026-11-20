@@ -26,7 +26,7 @@
 cd /home/zhihui/projects/llm-inference-lab
 source .venv/bin/activate
 python -c "import sys, torch; print(sys.executable); print(torch.__version__)"
-python learning/01_training/mse_practice.py
+python learning/01_training/01_tensors/mse_in_python.py
 ```
 
 终端中 Python 路径应落在本项目 `.venv/bin/` 内。该 `.venv` 是 Linux 环境，不能在 Windows PowerShell 中直接当成 Windows Python 使用。退出环境用 `deactivate`。
@@ -100,7 +100,7 @@ python3 -m venv --without-pip .venv
 cd /home/zhihui/projects/llm-inference-lab
 code .
 source .venv/bin/activate
-python learning/01_training/tensor_mse.py
+python learning/01_training/01_tensors/mse_with_tensors.py
 ```
 
 VS Code 使用 WSL 窗口，并选择 `/home/zhihui/projects/llm-inference-lab/.venv/bin/python`。

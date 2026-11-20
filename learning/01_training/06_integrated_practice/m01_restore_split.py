@@ -6,7 +6,7 @@ from torch.utils.data import Subset, TensorDataset
 
 
 def main() -> None:
-    directory = Path(__file__).resolve().parent
+    directory = Path(__file__).resolve().parent / "artifacts"
 
     # 1. 读取上一次实验保存的信息。
     config = json.loads(

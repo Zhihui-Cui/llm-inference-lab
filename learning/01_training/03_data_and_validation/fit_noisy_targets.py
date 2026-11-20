@@ -114,7 +114,8 @@ def main() -> None:
     epochs_without_improvement = 0
     update_count = 0
 
-    best_path = Path(__file__).with_name("linear_noisy_weights.pth")
+    best_path = Path(__file__).resolve().parent / "artifacts" / "linear_noisy_weights.pth"
+    best_path.parent.mkdir(exist_ok=True)
 
     for epoch in range(num_epochs):
         model.train()

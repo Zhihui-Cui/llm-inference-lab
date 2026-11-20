@@ -5,9 +5,7 @@ from torch import nn
 
 
 def main() -> None:
-    checkpoint_path = Path(__file__).with_name(
-        "binary_classification_checkpoint.pth"
-    )
+    checkpoint_path = Path(__file__).resolve().parent / "artifacts" / "binary_classification_checkpoint.pth"
 
     checkpoint = torch.load(
         checkpoint_path,

@@ -3,7 +3,7 @@ from pathlib import Path
 from torch import nn
 
 # 找到当前脚本同一目录下的参数文件。
-model_path = Path(__file__).with_name("linear_regression_nn.pth")
+model_path = Path(__file__).resolve().parent / "artifacts" / "linear_regression_nn.pth"
 
 load_model = nn.Linear(2, 1)
 
